@@ -1,13 +1,14 @@
+// path: course-service/src/main/java/vn/edu/crs/course_service/controller/CourseController.java
 package vn.edu.crs.course_service.controller;
 
 import vn.edu.crs.course_service.dto.CourseDTO;
 import vn.edu.crs.course_service.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
@@ -15,9 +16,12 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
 
+    // Thay the phuong thuc getAll() cu cua Buoi 2 bang phuong thuc moi:
     @GetMapping
-    public List<CourseDTO> getAll() {
-        return courseService.getAll();
+    public Page<CourseDTO> search(
+            @RequestParam(required = false) String keyword,
+            Pageable pageable) {
+        return courseService.search(keyword, pageable);
     }
 
     @GetMapping("/{id}")
