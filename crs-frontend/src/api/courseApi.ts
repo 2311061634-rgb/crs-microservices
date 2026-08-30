@@ -25,3 +25,7 @@ export const updateCourse = (id: number, values: CourseFormValues) => {
 export const deleteCourse = (id: number) => {
     return axiosClient.delete(`/api/courses/${id}`);
 };
+
+export const getCourseById = (id: number) => {
+    return axiosClient.get<Course>(`/api/courses/${id}`);
+};

@@ -4,7 +4,7 @@ export interface Registration {
     studentId: number;
     courseId: number;
     trangThai: 'DA_DANG_KY' | 'DA_HUY';
-    ngayDangky: string; // ISO date string tu backend, se format lai khi hien thi
+    ngayDangKy: string; // ISO date string tu backend, se format lai khi hien thi
 }
 
 export interface RegistrationRequest {
