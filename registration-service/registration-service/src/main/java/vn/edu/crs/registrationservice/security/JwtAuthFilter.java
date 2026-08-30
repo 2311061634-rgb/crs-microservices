@@ -33,6 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             try {
                 SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+                // Thay doan lay claims va tao Authentication cu bang:
                 Claims claims = Jwts.parser()
                         .verifyWith(key)
                         .build()
@@ -41,9 +42,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 String username = claims.getSubject();
                 String role = claims.get("role", String.class);
+                Long userId = claims.get("userId", Long.class);
 
                 var authToken = new UsernamePasswordAuthenticationToken(
-                        username, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+                        username,
+                        userId,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             } catch (Exception e) {
