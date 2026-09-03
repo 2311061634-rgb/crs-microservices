@@ -1,3 +1,4 @@
+import ApiKeysPage from './pages/ApiKeysPage';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -14,6 +15,14 @@ function App() {
             <AuthProvider>
                 <Navbar />
                 <Routes>
+                    <Route
+                        path="/admin/api-keys"
+                        element={
+                            <ProtectedRoute requiredRole="ADMIN">
+                                <ApiKeysPage />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route path="/" element={<Navigate to="/courses" replace />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/courses" element={<CoursesPage />} />
